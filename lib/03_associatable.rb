@@ -42,16 +42,6 @@ module Associatable
     define_method("#{name}") do
       fk_value = self.send(options.foreign_key)
       model_class = options.model_class
-      # hash_result = DBConnection.execute(<<-SQL, fk_value)
-      #   SELECT
-      #     *
-      #   FROM
-      #     #{model_class.table_name}
-      #   WHERE
-      #     #{options.primary_key} = ?
-      # SQL
-      #
-      # model_class.parse_all(hash_result).first
       
       # Human.where(id: ?) -> ? = owner_id of cat
       model_class.where(options.primary_key => fk_value).first
@@ -60,18 +50,9 @@ module Associatable
 
   def has_many(name, options = {})
     options = HasManyOptions.new(name, self, options)
+    assoc_options[name] = options
     define_method("#{name}") do
       model_class = options.model_class
-      # hash_result = DBConnection.execute(<<-SQL, self.id)
-      #   SELECT
-      #     *
-      #   FROM
-      #     #{model_class.table_name}
-      #   WHERE
-      #     #{options.foreign_key} = ?
-      # SQL
-      #
-      # model_class.parse_all(hash_result)
       
       # Cat.where(owner_id: ?) -> ? = id of human
       model_class.where(options.foreign_key => self.id)
