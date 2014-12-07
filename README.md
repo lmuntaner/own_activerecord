@@ -1,6 +1,6 @@
 # Active Record Lite!
 
-We created our own ActiveRecord.
+One of the solo projects in App Acaemy was to build our own version of Active Record.
 
 We created some methods to be able to search in the database with simple queries.
 Eventually we also created our own `belongs_to` and `has_many` methods.
